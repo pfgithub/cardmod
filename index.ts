@@ -49,9 +49,9 @@ function fmtcard(card) {
     if(suit_in === "C") suit = "♧";
 
     if(suit_in === "D" || suit_in === "H") {
-        return "\x1b[1;38;2;255;0;0;48;2;255;255;255m "+num+suit+" \x1b[0m";
+        return "\x1b[1;38;5;196;48;5;255m "+num+suit+" \x1b[0m";
     } else {
-        return "\x1b[1;38;2;0;0;0;48;2;255;255;255m "+num+suit+" \x1b[0m";
+        return "\x1b[1;38;5;232;48;5;255m "+num+suit+" \x1b[0m";
     }
 }
 
