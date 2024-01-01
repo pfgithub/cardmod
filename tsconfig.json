@@ -1,5 +1,7 @@
 {
     "compilerOptions": {
-        "strict": true
+        "strict": true,
+        "lib": ["ESNext"],
+        "types": ["bun-types"]
     }
 }

@@ -1,4 +1,4 @@
-const readline = require('readline');
+import * as readline from "readline";
 
 const rl = readline.createInterface({
   input: process.stdin,
@@ -63,7 +63,6 @@ async function main() {
     const deck = ["H", "D", "S", "C"].flatMap(v => ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"].map(q => q+" "+v));
     const discard = [];
     shuffle(deck);
-    console.log(deck);
     
     const players = [
         {hand: [], name: "p1"},
