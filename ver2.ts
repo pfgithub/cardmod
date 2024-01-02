@@ -1,4 +1,34 @@
 
+/*
+I think we can't have intentions
+It has to be
+- Perform an action
+- Validate the action
+
+So eg:
+- Can't play? Draw
+- Can now play? Play
+  - But not if the next person played before you could
+
+And if you have to say a suit, ie 'Hearts'
+You have to say it in the right order because if there's another thing asking
+for a suit, it will read that one first before the other thing does
+
+No intentions. Just actions.
+
+
+Now for state management
+
+We can eg list all the allowable actions and describe what happens
+when you perform one
+
+Or we can implement methods for validating performed actions
+
+Which route? Sometimes it feels like a mix of both is wanted
+
+*/
+
+
 type PlayerID = string & {__is_player_id: true};
 
 const CARD_NUMBERS = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"] as const;
