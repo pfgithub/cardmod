@@ -120,9 +120,40 @@ function int_FLIP_AND_START_GAME(state: State, player: Player): void {
         kind: "turn",
         turn: starting_player,
     };
+
+    return; // success
+}
+
+function gam_PLAY_CARD(state: State, player: Player, card_index: number): void {
+    const to_add_card = player.hand.cards[card_index]!;
+    const top_card = state.discard.cards[state.discard.cards.length - 1];
+    if(top_card == null) throw new Error("can't play card when no top card")
+
+    act_MOVE_CARDS(player.hand, card_index, 1, state.discard, Math.max(state.discard.cards.length - 1, 0));
+}
+
+function int_PLAY_CARD_FROM_HAND(state: State, player: Player, card_index: number): void {
+    if(state.v.kind !== "turn") throw new Error("not turn");
+    if(state.v.turn !== player) throw new Error("not your turn");
+
+    const card = player.hand.cards[card_index];
+    gam_PLAY_CARD(state, player, card_index);
+    state.v = {kind: "turn", turn: gam_CLOCKWISE(player)};
 }
 
 /*
+this is a weird arrangement because generally rules are based on actions
+you're allowed to do at times
+
+consider switching back to having a main fn and doing await ask([
+    int_PLAY_CARD_FROM_HAND(player),
+
+])
+
+ie on your turn, you can: xyz
+
+so the intention thing is not quite right
+
 crazy 8s rules:
 
 1. Deal 7 cards to each player
