@@ -1,5 +1,11 @@
 
 type PlayerID = string & {__is_player_id: true};
+
+const CARD_NUMBERS = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"] as const;
+const CARD_SUITS = ["H", "D", "S", "C"] as const;
+
+type Number = (typeof CARD_NUMBERS)[number];
+type Suit = (typeof CARD_SUITS)[number];
 type Card = `${string} ${string}`;
 type Player = {
     id: PlayerID,
@@ -141,6 +147,63 @@ function int_PLAY_CARD_FROM_HAND(state: State, player: Player, card_index: numbe
     state.v = {kind: "turn", turn: gam_CLOCKWISE(player)};
 }
 
+type Choose<T> = {
+    _: T,
+};
+function chooseNull(): Choose<null> {
+    return {_: 0 as never};
+}
+function choosePlayerID(): Choose<PlayerID> {
+    return {_: 0 as never};
+}
+function chooseEnum<
+    T extends {[key: string]: Choose<unknown>}
+>(choices: T): Choose<
+    {[key in keyof T]: {kind: key, value: T[key]}}[keyof T]
+>{
+    return 0 as never;
+}
+
+async function ask<T>(choice: Choose<T>): T {
+
+}
+
+async function game() {
+    const deck: Pile = {kind: "deck", cards: []};
+    const discard: Pile = {kind: "discard", cards: []};
+    const players: PlayerID[] = [];
+
+    // 1. add players and deal cards
+    while(true) {
+        const action = await ask(
+            chooseEnum({
+                player_join: choosePlayerID(),
+                deal_to_player: chooseNull(),
+                deal_start_card: chooseNull(),
+            } as const)
+        );
+        if(action.kind === "player_join") {
+            
+        }else if(action.kind === "deal_to_player") {
+
+        }else if(action.kind === "deal_start_card") {
+
+        }
+    }
+    // 3. deal start card
+    // 4. play rounds
+
+    // additional things to add
+    // - crazy 8s
+    // - allow players to jump in at any time
+    // - what if there are two discard piles?
+    //   - this means when you choose to play a card, you need to choose the
+    //     source card and the discard pile
+    //   - that argues for an (action, intention) method
+    //   - ie the action is (move card from hand to top of discard) and the
+    //      intention is (play card)
+}
+
 /*
 this is a weird arrangement because generally rules are based on actions
 you're allowed to do at times
@@ -187,3 +250,4 @@ function arrayShuffle<T>(array: T[]): void {
         array[sp] = temp;
     }
 }
+export {}
